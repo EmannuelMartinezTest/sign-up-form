@@ -1,0 +1,189 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  container-type: size;
+  display: flex;
+  background-color: #d5c4da;
+}
+body #successContainer {
+  flex: 1;
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+}
+body #successContainer .bigOdin {
+  writing-mode: horizontal-tb;
+  font-size: clamp(10rem, 30vw, 20rem);
+  line-height: 0.9;
+}
+body .scroll_container {
+  height: 100%;
+  width: 100%;
+  font-size: 24px;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+}
+body .scroll_container ul {
+  padding: 0;
+  margin: 0;
+  height: 1500px;
+  width: 100vw;
+}
+body .scroll_container li {
+  padding: 0;
+  margin: 0;
+  transform: translateX(100%);
+  animation-name: scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+body .scroll_container.fast {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+@container (min-width: 1200px) {
+  body #main {
+    max-width: 1200px;
+    justify-content: space-between;
+  }
+}
+@container (max-width: 850px) {
+  body .container {
+    justify-content: space-between;
+  }
+  body .container #main {
+    flex-grow: 1;
+  }
+  body .container #form {
+    width: 350px;
+  }
+  body .container .bigOdin.rl {
+    display: none;
+  }
+}
+@container (max-width: 600px) {
+  body .container {
+    flex-direction: column;
+  }
+  body .container #main {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  body .container #main .bigOdin {
+    font-size: 10rem;
+    writing-mode: horizontal-tb;
+    margin-top: 40px;
+  }
+  body .container #main .phantom {
+    display: block;
+    visibility: hidden;
+    flex: 0 1 50px;
+  }
+  body .container #form {
+    width: 350px;
+  }
+  body .container .bigOdin.rl {
+    display: none;
+  }
+}
+body .container {
+  min-height: 600px;
+  height: inherit;
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+body .container > * {
+  flex: 1;
+}
+body .container main {
+  flex-grow: 1;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+body .container main .phantom {
+  display: none;
+}
+body .container main form {
+  width: 350px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+  margin: 0 20px;
+  z-index: 2;
+}
+body .container main form form:hover > input:focus {
+  outline: none;
+}
+body .container main form form:hover > input:hover {
+  outline: 4px solid #fff01f;
+}
+body .container main form label {
+  display: none;
+}
+body .container main form input {
+  position: relative;
+  padding: 30px 20px 20px;
+}
+body .container main form input:focus::placeholder {
+  color: transparent;
+}
+body .container main form input:focus {
+  outline: 4px solid #fff01f;
+}
+body .container main form span {
+  display: none;
+}
+body .container main form button {
+  padding: 15px 70px;
+  background-color: black;
+  border: 1px solid white;
+  position: relative;
+  color: white;
+}
+body .container main form button:hover, body .container main form button:focus {
+  outline: 4px solid #fff01f;
+}
+body .container main form button:active {
+  top: 2px;
+}
+
+.bigOdin {
+  font-size: clamp(14rem, 24vh, 18rem);
+  line-height: 0.5;
+  writing-mode: vertical-lr;
+  color: black;
+  text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff;
+}
+.bigOdin.rl {
+  transform: rotate(180deg);
+}
+
+/*# sourceMappingURL=style.css.map */

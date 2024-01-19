@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="script.js" defer></script>
+    <title>Sign-Up</title>
+  </head>
+  <body>
+    <div class="scroll_container">
+      <ul></ul>
+    </div>
+    <div id="successContainer">
+      <div class="bigOdin">ODIN</div>
+    </div>
+    <div id="container" class="container">
+      <main id="main">
+        <div class="bigOdin">ODIN</div>
+        <form id="form" method="dialog">
+          <div class="form_input">
+            <label class="" for="full_name">Full Name</label>
+            <input
+              size="30"
+              placeholder="Name"
+              class=""
+              type="text"
+              name="user_full_name"
+              id="full_name"
+            />
+          </div>
+          <span class="error">missing name</span>
+          <div class="form_input">
+            <label class="" for="email">Email</label>
+            <input
+              size="30"
+              placeholder="Email"
+              class=""
+              name="user_email"
+              id="email"
+              type="email"
+            />
+            <span class="error">missing email</span>
+          </div>
+          <div class="form_input">
+            <label class="" for="phone">Phone</label>
+            <input
+              placeholder="Phone Number"
+              class=""
+              size="30"
+              name="user_phone"
+              id="phone"
+              type="tel"
+            />
+            <span class="error">missing number</span>
+          </div>
+          <div class="form_input">
+            <label class="" for="password">Password</label>
+            <input
+              placeholder="Password"
+              class=""
+              size="30"
+              name="user_password"
+              id="password"
+              type="password"
+            />
+            <span class="error">missing password</span>
+          </div>
+          <div class="form_input">
+            <label class="" for="confirm_password">Confirm Password</label>
+            <input
+              placeholder="Confirm Password"
+              class=""
+              size="30"
+              name="user_password_confirm"
+              id="confirm_password"
+              type="password"
+              required
+            />
+            <span class="error">passwords do not match</span>
+          </div>
+          <button class="bring_forward" type="button">Create Account</button>
+        </form>
+        <div class="phantom"></div>
+        <div class="bigOdin rl">ODIN</div>
+      </main>
+    </div>
+  </body>
+</html>
