@@ -1,25 +1,80 @@
 "use strict";
-let body = document.body;
-let clonable = document.querySelectorAll("label");
-let labels = [...document.querySelectorAll("label")];
-let labelsClone = Array.from(document.querySelectorAll("label")).map((label) => label.cloneNode(true));
-let errorMessages = [...document.querySelectorAll("span")];
-let scrollItems = document.querySelector("ul");
+const body = document.body;
+const labels = [...document.querySelectorAll("label")];
+// prettier-ignore
+const labelsClone = Array.from(document.querySelectorAll("label")).map((label) => label.cloneNode(true));
+const errorMessages = [...document.querySelectorAll("span")];
+const scrollItems = document.querySelector("ul");
+const form = document.querySelector(".container");
+const success = document.querySelector("#successContainer");
+const button = document.querySelector("button");
+const fullName = document.querySelector("#full_name");
+const email = document.querySelector("#email");
+const phoneNo = document.querySelector("#phone");
+const pwd = document.querySelector("#password");
+const inputs = document.querySelectorAll("input");
+// prettier-ignore
+const pwdConfirm = document.querySelector("#confirm_password");
+let fields = [fullName, email, phoneNo, pwd, pwdConfirm];
 let listCreated = false;
 let noErrors = false;
-let form = document.querySelector(".container");
-let success = document.querySelector("#successContainer");
-let button = document.querySelector("button");
-let fullName = document.querySelector("#full_name");
-let email = document.querySelector("#email");
-let phoneNo = document.querySelector("#phone");
-let pwd = document.querySelector("#password");
-// prettier-ignore
-let pwdConfirm = document.querySelector("#confirm_password");
-let fields = [fullName, email, phoneNo, pwd, pwdConfirm];
 let errorsChecked = false;
-button === null || button === void 0 ? void 0 : button.addEventListener("click", checkIfFormIsSubmittable);
-button === null || button === void 0 ? void 0 : button.addEventListener("focus", checkErrors);
+let filteredErrors = Array();
+let filteredLabels = Array();
+let filteredInputs = Array();
+let filteredLength;
+let label;
+const RAND_ARR_LENGTH = 100;
+let random = randomize(Array.from({ length: RAND_ARR_LENGTH }, (_, i) => i + 1));
+window.addEventListener("load", updateScroll, true);
+button.addEventListener("click", checkIfFormIsSubmittable);
+button.addEventListener("focus", checkErrors);
+body.addEventListener("click", setScrollLabel, true);
+body.addEventListener("focus", setScrollLabel, true);
+form.addEventListener("input", checkInput);
+/*
+    Main functions
+ */
+function checkErrors(evt, updateLabel = false) {
+    if (evt instanceof FocusEvent)
+        evt.preventDefault();
+    errorsChecked = true;
+    let error = getErrorBool();
+    resetFiltersAndLabels();
+    if (error) {
+        noErrors = false;
+        filteredLength = filteredInputs.length;
+        // TODO data validation and error testing
+        updateLabelErrors();
+        for (let i = 0; i < filteredLength; i++) {
+            if (filteredLength === 1 || i === filteredLength - 1) {
+                error += `${filteredLabels[i].textContent}>`;
+            }
+            else {
+                error += `${filteredLabels[i].textContent}, `;
+            }
+        }
+        label = error;
+        if (updateLabel)
+            return updateScroll(evt);
+        return updateScrollItems(label);
+    }
+    else {
+        updateScrollItems((label = "Everything looks good!"));
+        noErrors = true;
+    }
+}
+// Will only check the input AFTER an attempt to create an account with bad data.
+// This way the error message in the scroll will update on-the-fly for instant feedback.
+function checkInput(evt) {
+    if (!evt.target)
+        return;
+    if (!(evt.target instanceof HTMLInputElement))
+        return;
+    if (errorsChecked) {
+        checkErrors(evt, true);
+    }
+}
 function checkIfFormIsSubmittable(evt) {
     if (noErrors) {
         if (!form || !success)
@@ -34,77 +89,66 @@ function checkIfFormIsSubmittable(evt) {
         checkErrors(evt);
     }
 }
-function checkErrors(evt) {
-    if (evt instanceof FocusEvent)
-        evt.preventDefault();
-    errorsChecked = true;
-    let error = "";
-    fields.some((field) => {
-        if ((field === null || field === void 0 ? void 0 : field.value) === "") {
-            error += `Missing: <`;
-            return true;
+function resetFiltersAndLabels() {
+    filteredErrors = Array();
+    filteredLabels = Array();
+    filteredInputs = Array();
+    for (let i = 0; i < fields.length; i++) {
+        if (errorTesting(fields[i])) {
+            filteredErrors.push(errorMessages[i]);
+            filteredLabels.push(labelsClone[i]);
+            filteredInputs.push(fields[i]);
         }
+    }
+    labelsClone.forEach((state, index) => {
+        labels[index].textContent = state.textContent;
     });
-    // need a "Success! Your account has been created." somewhere
-    if (!error) {
-        updateScrollItems((label = "Everything looks good!"));
-        noErrors = true;
-        // I should then just visually hide the form from here.
+}
+function errorTesting(val) {
+    let id = val.id;
+    switch (id) {
+        case "full_name":
+            return val.value === "";
+        case "email":
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+            return !emailRegex.test(val.value);
+        case "phone":
+            const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[\s.\-0-9]{6,}$/;
+            return !phoneRegex.test(val.value);
+        case "password":
+            return val.value === "";
+        case "confirm_password":
+            return !confirmPassword();
+        default:
+            return false;
     }
-    else {
-        noErrors = false;
-        let filteredErrors = Array();
-        let filteredLabels = Array();
-        let filteredInputs = Array();
-        for (let i = 0; i < fields.length; i++) {
-            if (fields[i].value === "") {
-                filteredErrors.push(errorMessages[i]);
-                filteredLabels.push(labelsClone[i]);
-                filteredInputs.push(fields[i]);
+}
+function confirmPassword() {
+    return (inputs[3].value !== "" &&
+        inputs[4].value !== "" &&
+        inputs[3].value === inputs[4].value);
+}
+function updateLabelErrors() {
+    for (let i = 0; i < filteredLength; i++) {
+        labels.forEach((label, index) => {
+            // console.log(inputs[index].required);
+            if (label.textContent === filteredLabels[i].textContent) {
+                labels[index].textContent += ` (${filteredErrors[i].textContent})`;
             }
-        }
-        let filteredLength = filteredInputs.length;
-        labelsClone.forEach((state, index) => {
-            labels[index].textContent = state.textContent;
         });
-        for (let i = 0; i < filteredLength; i++) {
-            labels.forEach((label, index) => {
-                if (label.textContent === filteredLabels[i].textContent) {
-                    labels[index].textContent += ` (${filteredErrors[i].textContent})`;
-                }
-            });
-            if (filteredLength === 1 || i === filteredLength - 1) {
-                error += `${filteredLabels[i].textContent}>`;
-            }
-            else {
-                error += `${filteredLabels[i].textContent}, `;
-            }
-        }
-        label = error;
-        return updateScrollItems(label);
     }
 }
-let label;
-const RAND_ARR_LENGTH = 100;
-let random = randomize(Array.from({ length: RAND_ARR_LENGTH }, (element, i) => i + 1));
-function randomize(array) {
-    // Uses the Fisher-Yates Sorting Algorithm
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+function getErrorBool() {
+    return fields.some((field) => errorTesting(field)) ? `Missing: <` : "";
 }
-window.addEventListener("load", updateScroll, true);
-window.addEventListener("load", createClones, true);
-body.addEventListener("click", setScrollLabel, true);
-body.addEventListener("focus", setScrollLabel, true);
-function createClones() { }
+/*
+    Animation Functions
+*/
 function setScrollLabel(evt) {
     if (evt.target instanceof HTMLInputElement)
         return updateScroll(evt);
     if (!errorsChecked)
-        return updateScrollItems("hello");
+        return updateScrollItems("welcome");
     checkErrors(evt);
 }
 function updateScroll(evt) {
@@ -148,4 +192,15 @@ function getSelectedLabel(evt) {
         return labels.filter((label) => label.htmlFor === evt.target.id)[0].textContent;
     }
     return "welcome";
+}
+/*
+    Helper Functions
+*/
+function randomize(array) {
+    // Uses the Fisher-Yates Sorting Algorithm
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }

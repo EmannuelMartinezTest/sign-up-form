@@ -82,28 +82,29 @@ body .scroll_container.fast {
   }
 }
 @container (max-width: 600px) {
-  body .container {
+  body #container {
+    min-height: 850px;
     flex-direction: column;
   }
-  body .container #main {
+  body #container #main {
     flex-grow: 1;
     flex-direction: column;
     justify-content: space-between;
   }
-  body .container #main .bigOdin {
+  body #container #main .bigOdin {
     font-size: 10rem;
     writing-mode: horizontal-tb;
     margin-top: 40px;
   }
-  body .container #main .phantom {
+  body #container #main .phantom {
     display: block;
     visibility: hidden;
     flex: 0 1 50px;
   }
-  body .container #form {
+  body #container #form {
     width: 350px;
   }
-  body .container .bigOdin.rl {
+  body #container .bigOdin.rl {
     display: none;
   }
 }

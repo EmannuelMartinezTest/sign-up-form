@@ -94,7 +94,8 @@ body {
   }
 
   @container (max-width: 600px) {
-    .container {
+    #container {
+      min-height: 850px;
       flex-direction: column;
 
       #main {
@@ -210,7 +211,6 @@ body {
 
 .bigOdin {
   font-size: clamp(14rem, 24vh, 18rem);
-  //font-size: 24vh;
   line-height: 0.5;
   writing-mode: vertical-lr;
   color: black;
