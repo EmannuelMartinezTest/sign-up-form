@@ -1,7 +1,9 @@
 "use strict";
+/*
+    Variables
+ */
 const body = document.body;
 const labels = [...document.querySelectorAll("label")];
-// prettier-ignore
 const labelsClone = Array.from(document.querySelectorAll("label")).map((label) => label.cloneNode(true));
 const errorMessages = [...document.querySelectorAll("span")];
 const scrollItems = document.querySelector("ul");
@@ -13,7 +15,6 @@ const email = document.querySelector("#email");
 const phoneNo = document.querySelector("#phone");
 const pwd = document.querySelector("#password");
 const inputs = document.querySelectorAll("input");
-// prettier-ignore
 const pwdConfirm = document.querySelector("#confirm_password");
 let fields = [fullName, email, phoneNo, pwd, pwdConfirm];
 let listCreated = false;

@@ -1,7 +1,11 @@
+/*
+    Variables
+ */
 const body = document.body;
 const labels = [...document.querySelectorAll("label")];
-// prettier-ignore
-const labelsClone = Array.from(document.querySelectorAll("label")).map((label) => label.cloneNode(true),);
+const labelsClone = Array.from(document.querySelectorAll("label")).map(
+  (label) => label.cloneNode(true),
+);
 const errorMessages = [...document.querySelectorAll("span")];
 const scrollItems = document.querySelector("ul");
 const form = document.querySelector(".container") as HTMLElement;
@@ -12,8 +16,9 @@ const email = document.querySelector("#email") as HTMLInputElement;
 const phoneNo = document.querySelector("#phone") as HTMLInputElement;
 const pwd = document.querySelector("#password") as HTMLInputElement;
 const inputs = document.querySelectorAll("input");
-// prettier-ignore
-const pwdConfirm = document.querySelector("#confirm_password") as HTMLInputElement;
+const pwdConfirm = document.querySelector(
+  "#confirm_password",
+) as HTMLInputElement;
 
 let fields = [fullName, email, phoneNo, pwd, pwdConfirm];
 

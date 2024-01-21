@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  font-family: serif;
 }
 
 body {
@@ -42,6 +43,7 @@ body .scroll_container ul {
 body .scroll_container li {
   padding: 0;
   margin: 0;
+  white-space: nowrap;
   transform: translateX(100%);
   animation-name: scroll;
   animation-timing-function: linear;
@@ -52,7 +54,7 @@ body .scroll_container li {
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-155%);
   }
 }
 body .scroll_container.fast {
@@ -83,7 +85,7 @@ body .scroll_container.fast {
 }
 @container (max-width: 600px) {
   body #container {
-    min-height: 850px;
+    min-height: 750px;
     flex-direction: column;
   }
   body #container #main {
