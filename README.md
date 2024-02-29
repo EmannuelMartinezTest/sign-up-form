@@ -1,5 +1,5 @@
 # Sign-Up Form Project!
-A live implementation of the project can be found at this [GitHub Pages Link](https://emannuelmartineztest.github.io/sign-up-form/).
+A live implementation of the project can be found at this [GitHub Pages Link](https://lilyrubyroy.github.io/sign-up-form/).
 
 ## Design Philosophy
 ### Brutalism
